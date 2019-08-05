@@ -10,7 +10,7 @@ If you want to use this on an ARM-Device (like the Raspberry Pi), you have two o
     ```
 - Build the image directly on your device:
     ```
-    $ docker build -t timemachine-rpi:latest -f Dockerfile.rpi .
+    $ docker build -t timemachine-rpi:latest -f Dockerfile .
     $ docker run -h timemachine --name timemachine --restart=unless-stopped -d -v /external_volume:/timemachine -it -p 548:548 -p 636:636 timemachine-rpi
     ```
 
@@ -107,9 +107,16 @@ There are these environment variables:
 * **AFP_PASSWORD**: User password
 * **AFP_NAME**: Name of the volume
 * **AFP_SIZE_LIMIT**: Size in MB of the volume (optional)
+* **PUID**: For UID
+* **PGID**: For GID
 
 Using these variables, the container will create a user at boot time (only one per container) and **the data will be stored directly in the volume `/timemachine`, without subfolders**.
 
+To find your `PUID` and `GUID` use `id user` as below:
+```
+    $ id <dockeruser>
+       uid=1000(dockeruser) gid=1000(dockeruser)  groups=1000(dockergroup)
+```
 
 ## FAQ
 

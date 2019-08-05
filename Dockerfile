@@ -1,12 +1,12 @@
 FROM alpine:latest
-MAINTAINER Óscar de Arriba <odarriba@gmail.com>
+LABEL maintainer="Óscar de Arriba <odarriba@gmail.com>"
 
 ##################
 ##   BUILDING   ##
 ##################
 
 # Versions to use
-ENV netatalk_version 3.1.11
+ENV netatalk_version 3.1.12
 
 WORKDIR /
 
@@ -27,6 +27,7 @@ RUN apk update && \
       db \
       libevent \
       file \
+      tzdata \
       acl \
       openssl \
       supervisor && \
@@ -75,6 +76,7 @@ RUN mkdir -p /timemachine && \
 RUN touch /var/log/afpd.log
 
 ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 ADD start_netatalk.sh /start_netatalk.sh
 ADD bin/add-account /usr/bin/add-account
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
